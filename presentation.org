@@ -1,0 +1,67 @@
+* Regex derivatives!!!
+Clojure-PDX, October 2016
+
+Russell Mull
+https://github.com/mullr/regex-derivatives
+
+* In core.spec
+(s/cat :x double? 
+       :y double?
+       :z (s/alt :s string?
+                 :d double?))
+
+matches: 
+- [1.0 2.0]
+- [1.0 2.0 "a"]
+- [1.0 2.0 3.0]
+* 60's tech
+- Brzozowski 1964
+- More recently, Might 2011
+
+* The intuition
+(= (derivative #"abcd" a)
+   #"bcd")
+
+* Our notation
+** Primitives
+- :epsilon
+- :null
+- [:val 42]
+** Combinators
+- [:star a]
+- [:alt a b]
+- [:cat a b]
+** For example
+#"ab*"
+[:cat [:val \a]
+      [:star [:val \b]]]
+
+* Let's code!
+* How to have more fun with this
+** Variadic alt/cat
+** Clojure data structure-based representation
+[:val \a] => \a
+[:cat a b] => [a b]
+[:alt a b] => #{a b}
+** Build a parse tree
+* References
+- Brzozowski Derivative
+  - https://en.wikipedia.org/wiki/Brzozowski_derivative
+  - http://matt.might.net/papers/might2011derivatives.pdf contains an overview
+
+- Matt Might: Yacc is Dead
+  - http://matt.might.net/articles/parsing-with-derivatives/
+  - http://matt.might.net/papers/might2011derivatives.pdf
+  - video: https://www.youtube.com/watch?v=ZzsK8Am6dKU
+  - As presented by David Nolan:
+    - https://www.youtube.com/watch?v=FKiEsJiTMtI
+
+- Will Byrd's logic versions
+  https://github.com/webyrd/relational-parsing-with-derivatives
+
+- New complexity work
+  https://arxiv.org/pdf/1604.04695.pdf
+
+- My thing
+  https://github.com/mullr/parsing-with-derivatives
+  
